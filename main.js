@@ -25,7 +25,7 @@ directionalLight.position.set(5, 5, 5).normalize();
 scene.add(directionalLight);
 
 // Set up the camera position and look at the scene's center
-camera.position.set(0, 1, 10);
+camera.position.set(0, 2, 15);
 camera.lookAt(scene.position);
 
 // Add orbit controls for interaction
@@ -45,9 +45,9 @@ animate();
 
 // Adjust canvas size on window resize
 window.addEventListener('resize', function() {
+    renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 // Test with a simple object
