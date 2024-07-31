@@ -4,14 +4,16 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0xffffff, 1); // Set background color to white
 document.body.appendChild(renderer.domElement);
 
 // Load your 3D model (replace 'model.glb' with your actual model file)
 var loader = new THREE.GLTFLoader();
 loader.load('Creates.glb', function(gltf) {
     scene.add(gltf.scene);
+    console.log('Model loaded successfully');
 }, undefined, function(error) {
-    console.error(error);
+    console.error('An error happened:', error);
 });
 
 // Set up lighting
@@ -23,7 +25,7 @@ directionalLight.position.set(5, 5, 5).normalize();
 scene.add(directionalLight);
 
 // Set up the camera position
-camera.position.z = 5;
+camera.position.set(0, 1, 5);
 
 // Add orbit controls for interaction
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -46,3 +48,9 @@ window.addEventListener('resize', function() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// Test with a simple object
+var geometry = new THREE.BoxGeometry();
+var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+var cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
