@@ -17,15 +17,16 @@ loader.load('Creates.glb', function(gltf) {
 });
 
 // Set up lighting
-var ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+var ambientLight = new THREE.AmbientLight(0x404040, 1); // soft white light
 scene.add(ambientLight);
 
 var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 5, 5).normalize();
 scene.add(directionalLight);
 
-// Set up the camera position
-camera.position.set(0, 1, 5);
+// Set up the camera position and look at the scene's center
+camera.position.set(0, 1, 10);
+camera.lookAt(scene.position);
 
 // Add orbit controls for interaction
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -37,7 +38,7 @@ controls.maxPolarAngle = Math.PI / 2; // Limit vertical rotation
 // Create a simple animation loop
 var animate = function () {
     requestAnimationFrame(animate);
-    controls.update(); // Only required if controls.enableDamping = true, or if controls.autoRotate = true
+    controls.update();
     renderer.render(scene, camera);
 };
 animate();
@@ -54,3 +55,7 @@ var geometry = new THREE.BoxGeometry();
 var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
+
+// Add a grid helper to visualize the coordinate system
+var gridHelper = new THREE.GridHelper(10, 10);
+scene.add(gridHelper);
